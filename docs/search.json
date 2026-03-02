@@ -1,0 +1,62 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "English Education and Technology",
+    "section": "",
+    "text": "Preface\nThis material has been compiled using GenAI for the English Language Education and Technology course in Spring 2026. It is primarily targeted at linguistics students.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "01.setup.html",
+    "href": "01.setup.html",
+    "title": "1  Setting Up Environment",
+    "section": "",
+    "text": "1.1 Setting Up VSCode for Data Analysis\nVisual Studio Code (VSCode) is a free, open-source code editor developed by Microsoft. It supports multiple programming languages, extensions, and integrations, making it an excellent choice for data analysis.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setting Up Environment</span>"
+    ]
+  },
+  {
+    "objectID": "01.setup.html#setting-up-vscode-for-data-analysis",
+    "href": "01.setup.html#setting-up-vscode-for-data-analysis",
+    "title": "1  Setting Up Environment",
+    "section": "",
+    "text": "1.1.1 Installing VSCode\n\nDownload VSCode: Visit the VSCode official website and download the installer for your operating system (Windows, macOS, or Linux).\nInstall VSCode: Run the installer and follow the installation instructions.\n\n\n\n1.1.2 Setting Up Python in VSCode\n\nInstall Python: Ensure Python is installed on your system. You can download it from the official Python website.\nInstall Python Extension for VSCode:\n\nOpen VSCode and go to the Extensions view by clicking on the Extensions icon in the sidebar or pressing Ctrl+Shift+X.\nSearch for “Python” and install the extension provided by Microsoft.\n\nVerify Python Installation:\n\nOpen a terminal in VSCode (`Ctrl+``) and type:\npython --version\nYou should see the installed Python version. If not, check your installation path.\n\nSet Up a Virtual Environment (Optional but recommended):\n\nCreate a virtual environment to manage dependencies for your project:\npython -m venv myenv\nActivate the virtual environment:\n\nWindows: myenv\\Scripts\\activate\nmacOS/Linux: source myenv/bin/activate\n\n\nInstall Essential Libraries:\n\nUse pip to install essential libraries like pandas, NumPy, and matplotlib:\npip install pandas numpy matplotlib seaborn\n\nCreate a Python File:\n\nOpen a new file, save it with a .py extension, and write your first Python code. For example:\nimport pandas as pd\nimport numpy as np\n\n# Create a simple DataFrame\ndata = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35]}\ndf = pd.DataFrame(data)\n\nprint(df)\n\nRunning Python Code:\n\nRun the code by clicking the “Run” button at the top right or by pressing F5.\n\n\n\n\n1.1.3 Additional Tips\n\nJupyter Notebook in VSCode: You can also use Jupyter notebooks within VSCode by installing the Jupyter extension.\nLinting and Formatting: Use extensions like Pylint or Black to maintain code quality.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setting Up Environment</span>"
+    ]
+  },
+  {
+    "objectID": "01.setup.html#setting-up-google-colab-for-data-analysis",
+    "href": "01.setup.html#setting-up-google-colab-for-data-analysis",
+    "title": "1  Setting Up Environment",
+    "section": "1.2 Setting Up Google Colab for Data Analysis",
+    "text": "1.2 Setting Up Google Colab for Data Analysis\nGoogle Colab is a free, cloud-based platform that provides Jupyter Notebook environments. It allows you to write and execute Python code in your browser, making it a great tool for data analysis, especially when dealing with large datasets and GPU-based computations.\n\n1.2.1 Getting Started with Google Colab\n\nAccess Google Colab:\n\nGo to Google Colab using your Google account.\n\nCreating a New Notebook:\n\nClick on “New Notebook” to create a new notebook. This will open a new page with a code cell ready to run.\n\nInstalling and Importing Libraries:\n\nUse pip to install any additional libraries you need directly within a cell:\n# Install pandas and numpy\n!pip install pandas numpy\n\nWriting and Running Code:\n\nWrite your code in the code cells and run it by clicking the play button on the left side of the cell or pressing Shift+Enter.\nimport pandas as pd\nimport numpy as np\n\n# Creating a DataFrame\ndata = {'Product': ['Apples', 'Bananas', 'Cherries'], 'Price': [1.2, 0.8, 2.5]}\ndf = pd.DataFrame(data)\n\n# Displaying the DataFrame\nprint(df)\n\n\n\n\n1.2.2 Uploading Files and Connecting to Google Drive\n\nUploading Files: You can upload files directly to the Colab environment by using the file upload button on the left sidebar.\nConnecting to Google Drive: If you have data stored on Google Drive, you can easily access it by mounting your drive.\nfrom google.colab import drive\ndrive.mount('/content/drive')\nThis code will prompt you to authorize access to your Google Drive.\n\n\n\n1.2.3 Using GPU or TPU for Accelerated Computing\nGoogle Colab allows you to use GPUs or TPUs to speed up your computations, especially useful for machine learning tasks.\n\nChanging Runtime Type:\n\nGo to Runtime &gt; Change runtime type.\nSelect “GPU” or “TPU” under “Hardware accelerator” and click “Save”.\n\n\n\n\n1.2.4 Saving and Exporting Your Work\n\nSaving Notebooks: Colab automatically saves your work to Google Drive, but you can also save a copy manually by selecting File &gt; Save a copy in Drive.\nExporting Notebooks: You can download your notebook as a .ipynb or .py file by selecting File &gt; Download.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setting Up Environment</span>"
+    ]
+  },
+  {
+    "objectID": "01.setup.html#summary",
+    "href": "01.setup.html#summary",
+    "title": "1  Setting Up Environment",
+    "section": "1.3 Summary",
+    "text": "1.3 Summary\n\nVSCode is great for local development with rich support for extensions, virtual environments, and debugging.\nGoogle Colab is ideal for cloud-based development, especially when you need quick access to computational resources like GPUs and TPUs.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setting Up Environment</span>"
+    ]
+  },
+  {
+    "objectID": "01.setup.html#section",
+    "href": "01.setup.html#section",
+    "title": "1  Setting Up Environment",
+    "section": "1.4 ",
+    "text": "1.4",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setting Up Environment</span>"
+    ]
+  }
+]
