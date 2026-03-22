@@ -538,14 +538,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch the transcript</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    transcript <span class="op">=</span> YouTubeTranscriptApi.get_transcript(video_id)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    transcript <span class="op">=</span> YouTubeTranscriptApi().fetch(video_id)</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Prepare to save the transcript to a .txt file</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'transcript.txt'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> txt_file:</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> entry <span class="kw">in</span> transcript:</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            start_time <span class="op">=</span> entry[<span class="st">'start'</span>]</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            duration <span class="op">=</span> entry[<span class="st">'duration'</span>]</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            text <span class="op">=</span> entry[<span class="st">'text'</span>]</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            start_time <span class="op">=</span> entry.start</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            duration <span class="op">=</span> entry.duration</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            text <span class="op">=</span> entry.text</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Writing to txt file</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            txt_file.write(<span class="ss">f"Start: </span><span class="sc">{</span>start_time<span class="sc">}</span><span class="ss"> seconds, Duration: </span><span class="sc">{</span>duration<span class="sc">}</span><span class="ss"> seconds</span><span class="ch">\n</span><span class="ss">Text: </span><span class="sc">{</span>text<span class="sc">}</span><span class="ch">\n\n</span><span class="ss">"</span>)</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -557,7 +557,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Writing each transcript entry</span></span>
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> entry <span class="kw">in</span> transcript:</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            writer.writerow([entry[<span class="st">'start'</span>], entry[<span class="st">'duration'</span>], entry[<span class="st">'text'</span>]])</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            writer.writerow([entry.start, entry.duration, entry.text])</span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Transcript saved as 'transcript.txt' and 'transcript.csv'"</span>)</span>
 <span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -849,7 +849,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>youtube <span class="op">=</span> build(<span class="st">'youtube'</span>, <span class="st">'v3'</span>, developerKey<span class="op">=</span>api_key)</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace with your Playlist ID</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>playlist_id <span class="op">=</span> <span class="st">'YOUR_PLAYLIST_ID'</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>playlist_id <span class="op">=</span> <span class="st">'YOUR_Playlist_ID'</span></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create directory for storing text files</span></span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(<span class="st">'playlist_txt'</span>):</span>
@@ -895,9 +895,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Fetch transcript using youtube-transcript-api</span></span>
 <span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>                transcript <span class="op">=</span> YouTubeTranscriptApi.get_transcript(video_id)</span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Combine all subtitle text into a single string, ensuring it's properly joined</span></span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>                combined_subtitle <span class="op">=</span> <span class="st">" "</span>.join([entry[<span class="st">'text'</span>].strip() <span class="cf">for</span> entry <span class="kw">in</span> transcript])</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>                transcript <span class="op">=</span> YouTubeTranscriptApi().fetch(video_id)</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Combine all subtitle text into a single string</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>                combined_subtitle <span class="op">=</span> <span class="st">" "</span>.join([entry.text.strip() <span class="cf">for</span> entry <span class="kw">in</span> transcript])</span>
 <span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> video_title, combined_subtitle</span>
 <span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span> (NoTranscriptFound, TranscriptsDisabled):</span>
@@ -934,27 +934,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Append video title and file path for pandas import</span></span>
 <span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>        transcript_data.append({<span class="st">'Video Title'</span>: video_title, <span class="st">'Text File'</span>: txt_filename})</span>
 <span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Skipping video ID </span><span class="sc">{</span>video_id<span class="sc">}</span><span class="ss"> due to missing title."</span>)</span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="co"># Now import the .txt files into pandas and create an Excel sheet</span></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="co"># List to hold the contents of each txt file</span></span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>df_list <span class="op">=</span> []</span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="co"># Read each txt file and store its content in the DataFrame</span></span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> transcript <span class="kw">in</span> transcript_data:</span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(transcript[<span class="st">'Text File'</span>], <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>        text_content <span class="op">=</span> <span class="bu">file</span>.read()</span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>    df_list.append({<span class="st">'Video Title'</span>: transcript[<span class="st">'Video Title'</span>], <span class="st">'Transcript'</span>: text_content})</span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pandas DataFrame</span></span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(df_list)</span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the DataFrame to an Excel file</span></span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>output_excel <span class="op">=</span> <span class="st">'playlist_transcripts.xlsx'</span></span>
-<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>df.to_excel(output_excel, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Transcripts for the playlist videos saved to 'playlist_transcripts.xlsx'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Skipping video ID </span><span class="sc">{</span>video_id<span class="sc">}</span><span class="ss"> due to missing title."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="explanation-of-changes-1" class="level3" data-number="2.3.6">
 <h3 data-number="2.3.6" class="anchored" data-anchor-id="explanation-of-changes-1"><span class="header-section-number">2.3.6</span> Explanation of Changes:</h3>
