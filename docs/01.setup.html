@@ -200,9 +200,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#setting-up-vscode-for-data-analysis" id="toc-setting-up-vscode-for-data-analysis" class="nav-link active" data-scroll-target="#setting-up-vscode-for-data-analysis"><span class="header-section-number">1.1</span> Setting Up VSCode for Data Analysis</a>
   <ul class="collapse">
-  <li><a href="#installing-vscode" id="toc-installing-vscode" class="nav-link" data-scroll-target="#installing-vscode"><span class="header-section-number">1.1.1</span> Installing VSCode</a></li>
-  <li><a href="#setting-up-python-in-vscode" id="toc-setting-up-python-in-vscode" class="nav-link" data-scroll-target="#setting-up-python-in-vscode"><span class="header-section-number">1.1.2</span> Setting Up Python in VSCode</a></li>
-  <li><a href="#additional-tips" id="toc-additional-tips" class="nav-link" data-scroll-target="#additional-tips"><span class="header-section-number">1.1.3</span> Additional Tips</a></li>
+  <li><a href="#install-visual-studio-code" id="toc-install-visual-studio-code" class="nav-link" data-scroll-target="#install-visual-studio-code"><span class="header-section-number">1.1.1</span> 1. Install Visual Studio Code</a></li>
+  <li><a href="#install-miniconda" id="toc-install-miniconda" class="nav-link" data-scroll-target="#install-miniconda"><span class="header-section-number">1.1.2</span> 2. Install Miniconda</a></li>
+  <li><a href="#set-up-python-environment" id="toc-set-up-python-environment" class="nav-link" data-scroll-target="#set-up-python-environment"><span class="header-section-number">1.1.3</span> 3. Set Up Python Environment</a></li>
   </ul></li>
   <li><a href="#setting-up-google-colab-for-data-analysis" id="toc-setting-up-google-colab-for-data-analysis" class="nav-link" data-scroll-target="#setting-up-google-colab-for-data-analysis"><span class="header-section-number">1.2</span> Setting Up Google Colab for Data Analysis</a>
   <ul class="collapse">
@@ -212,7 +212,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#saving-and-exporting-your-work" id="toc-saving-and-exporting-your-work" class="nav-link" data-scroll-target="#saving-and-exporting-your-work"><span class="header-section-number">1.2.4</span> Saving and Exporting Your Work</a></li>
   </ul></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">1.3</span> Summary</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">1.4</span> </a></li>
   </ul>
 </nav>
     </div>
@@ -242,67 +241,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setting-up-vscode-for-data-analysis" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="setting-up-vscode-for-data-analysis"><span class="header-section-number">1.1</span> Setting Up VSCode for Data Analysis</h2>
 <p><strong>Visual Studio Code (VSCode)</strong> is a free, open-source code editor developed by Microsoft. It supports multiple programming languages, extensions, and integrations, making it an excellent choice for data analysis.</p>
-<section id="installing-vscode" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="installing-vscode"><span class="header-section-number">1.1.1</span> Installing VSCode</h3>
-<ol type="1">
-<li><p><strong>Download VSCode</strong>: Visit the <a href="https://code.visualstudio.com/">VSCode official website</a> and download the installer for your operating system (Windows, macOS, or Linux).</p></li>
-<li><p><strong>Install VSCode</strong>: Run the installer and follow the installation instructions.</p></li>
-</ol>
-</section>
-<section id="setting-up-python-in-vscode" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="setting-up-python-in-vscode"><span class="header-section-number">1.1.2</span> Setting Up Python in VSCode</h3>
-<ol type="1">
-<li><p><strong>Install Python</strong>: Ensure Python is installed on your system. You can download it from the <a href="https://www.python.org/downloads/">official Python website</a>.</p></li>
-<li><p><strong>Install Python Extension for VSCode</strong>:</p>
+<p>Here is a clean Markdown (MD) version in English based on your content:</p>
+<section id="install-visual-studio-code" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="install-visual-studio-code"><span class="header-section-number">1.1.1</span> 1. Install Visual Studio Code</h3>
+<p>Download and install Visual Studio Code from the official website:</p>
 <ul>
-<li>Open VSCode and go to the Extensions view by clicking on the Extensions icon in the sidebar or pressing <code>Ctrl+Shift+X</code>.</li>
-<li>Search for “Python” and install the extension provided by Microsoft.</li>
-</ul></li>
-<li><p><strong>Verify Python Installation</strong>:</p>
-<ul>
-<li><p>Open a terminal in VSCode (`Ctrl+``) and type:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>You should see the installed Python version. If not, check your installation path.</p></li>
-</ul></li>
-<li><p><strong>Set Up a Virtual Environment</strong> (Optional but recommended):</p>
-<ul>
-<li><p>Create a virtual environment to manage dependencies for your project:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv myenv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Activate the virtual environment:</p>
-<ul>
-<li><strong>Windows</strong>: <code>myenv\Scripts\activate</code></li>
-<li><strong>macOS/Linux</strong>: <code>source myenv/bin/activate</code></li>
-</ul></li>
-</ul></li>
-<li><p><strong>Install Essential Libraries</strong>:</p>
-<ul>
-<li><p>Use pip to install essential libraries like pandas, NumPy, and matplotlib:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pandas numpy matplotlib seaborn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul></li>
-<li><p><strong>Create a Python File</strong>:</p>
-<ul>
-<li><p>Open a new file, save it with a <code>.py</code> extension, and write your first Python code. For example:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a simple DataFrame</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {<span class="st">'Name'</span>: [<span class="st">'Alice'</span>, <span class="st">'Bob'</span>, <span class="st">'Charlie'</span>], <span class="st">'Age'</span>: [<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>]}</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul></li>
-<li><p><strong>Running Python Code</strong>:</p>
-<ul>
-<li>Run the code by clicking the “Run” button at the top right or by pressing <code>F5</code>.</li>
-</ul></li>
-</ol>
-</section>
-<section id="additional-tips" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" class="anchored" data-anchor-id="additional-tips"><span class="header-section-number">1.1.3</span> Additional Tips</h3>
-<ul>
-<li><strong>Jupyter Notebook in VSCode</strong>: You can also use Jupyter notebooks within VSCode by installing the Jupyter extension.</li>
-<li><strong>Linting and Formatting</strong>: Use extensions like Pylint or Black to maintain code quality.</li>
+<li><a href="https://code.visualstudio.com/download" class="uri">https://code.visualstudio.com/download</a></li>
 </ul>
+</section>
+<section id="install-miniconda" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="install-miniconda"><span class="header-section-number">1.1.2</span> 2. Install Miniconda</h3>
+<p>Download and install Miniconda:</p>
+<ul>
+<li><a href="https://www.anaconda.com/docs/getting-started/miniconda/main#windows-installers" class="uri">https://www.anaconda.com/docs/getting-started/miniconda/main#windows-installers</a></li>
+</ul>
+</section>
+<section id="set-up-python-environment" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="set-up-python-environment"><span class="header-section-number">1.1.3</span> 3. Set Up Python Environment</h3>
+<section id="launch-anaconda-miniconda-prompt" class="level4" data-number="1.1.3.1">
+<h4 data-number="1.1.3.1" class="anchored" data-anchor-id="launch-anaconda-miniconda-prompt"><span class="header-section-number">1.1.3.1</span> 3.1 Launch Anaconda (Miniconda) Prompt</h4>
+<p>Open the <strong>Anaconda Prompt</strong> (or Miniconda Prompt) from your system.</p>
+</section>
+<section id="check-python-installation" class="level4" data-number="1.1.3.2">
+<h4 data-number="1.1.3.2" class="anchored" data-anchor-id="check-python-installation"><span class="header-section-number">1.1.3.2</span> 3.2 Check Python Installation</h4>
+<p>Verify that Python is installed correctly:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="create-a-virtual-environment" class="level4" data-number="1.1.3.3">
+<h4 data-number="1.1.3.3" class="anchored" data-anchor-id="create-a-virtual-environment"><span class="header-section-number">1.1.3.3</span> 3.3 Create a Virtual Environment</h4>
+<p>Create a new virtual environment named <code>engtech_env</code> with Python 3.13:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> engtech_env python=3.13</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="activate-the-virtual-environment-and-install-packages" class="level4" data-number="1.1.3.4">
+<h4 data-number="1.1.3.4" class="anchored" data-anchor-id="activate-the-virtual-environment-and-install-packages"><span class="header-section-number">1.1.3.4</span> 3.4 Activate the Virtual Environment and Install Packages</h4>
+<p>Activate the environment and install Jupyter and ipykernel:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate engtech_env</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install jupyter ipykernel</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 </section>
 <section id="setting-up-google-colab-for-data-analysis" class="level2" data-number="1.2">
@@ -322,21 +297,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Installing and Importing Libraries</strong>:</p>
 <ul>
 <li><p>Use <code>pip</code> to install any additional libraries you need directly within a cell:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install pandas and numpy</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install pandas numpy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install pandas and numpy</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install pandas numpy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul></li>
 <li><p><strong>Writing and Running Code</strong>:</p>
 <ul>
 <li><p>Write your code in the code cells and run it by clicking the play button on the left side of the cell or pressing <code>Shift+Enter</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a DataFrame</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {<span class="st">'Product'</span>: [<span class="st">'Apples'</span>, <span class="st">'Bananas'</span>, <span class="st">'Cherries'</span>], <span class="st">'Price'</span>: [<span class="fl">1.2</span>, <span class="fl">0.8</span>, <span class="fl">2.5</span>]}</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying the DataFrame</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a DataFrame</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {<span class="st">'Product'</span>: [<span class="st">'Apples'</span>, <span class="st">'Bananas'</span>, <span class="st">'Cherries'</span>], <span class="st">'Price'</span>: [<span class="fl">1.2</span>, <span class="fl">0.8</span>, <span class="fl">2.5</span>]}</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying the DataFrame</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul></li>
 </ol>
 </section>
@@ -345,8 +320,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p><strong>Uploading Files</strong>: You can upload files directly to the Colab environment by using the file upload button on the left sidebar.</p></li>
 <li><p><strong>Connecting to Google Drive</strong>: If you have data stored on Google Drive, you can easily access it by mounting your drive.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>drive.mount(<span class="st">'/content/drive'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>drive.mount(<span class="st">'/content/drive'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This code will prompt you to authorize access to your Google Drive.</p></li>
 </ul>
 </section>
@@ -375,9 +350,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>VSCode</strong> is great for local development with rich support for extensions, virtual environments, and debugging.</li>
 <li><strong>Google Colab</strong> is ideal for cloud-based development, especially when you need quick access to computational resources like GPUs and TPUs.</li>
 </ul>
-</section>
-<section id="section" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="section"><span class="header-section-number">1.4</span> </h2>
 
 
 </section>
