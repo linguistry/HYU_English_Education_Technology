@@ -358,5 +358,135 @@
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Word Embedding Activities</span>"
     ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html",
+    "href": "08.Reading_Listening.html",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "",
+    "text": "9 Syllable Counter for Reading Passages",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#overview",
+    "href": "08.Reading_Listening.html#overview",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.1 Overview",
+    "text": "9.1 Overview\nThis tutorial walks you through building an automated syllable counter for text data using Python. The pipeline:\n\nLoads the CMU Pronouncing Dictionary (CMUdict) — a standard lexical resource that maps English words to their phonetic pronunciations in ARPABET notation.\nReads raw .txt files from a folder, cleans them, and tokenizes them.\nConverts numeric tokens (e.g., 42) into their spoken word equivalents (FORTY-TWO).\nCounts syllables for each passage by combining two strategies:\n\nCMUdict-based counting — digit-counting on ARPABET strings for dictionary words.\nRule-based counting — regex pattern matching for out-of-vocabulary (OOV) words.\n\n\nThis approach is particularly useful for readability analysis of SAT reading passages, where syllable count is a key component of formulas like the Flesch-Kincaid Grade Level.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#prerequisites",
+    "href": "08.Reading_Listening.html#prerequisites",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.2 Prerequisites",
+    "text": "9.2 Prerequisites\n\nPython 3.7+\npandas, numpy, num2words\nThe CMU Pronouncing Dictionary file (named cmudict-07b)\nA folder named input_text/ containing .txt files to analyze",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#step-1-import-and-build-cmudict",
+    "href": "08.Reading_Listening.html#step-1-import-and-build-cmudict",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.3 Step 1 — Import and Build CMUdict",
+    "text": "9.3 Step 1 — Import and Build CMUdict\n\n9.3.1 What is CMUdict?\nThe CMU Pronouncing Dictionary is a free, open-source pronunciation dictionary for North American English, maintained by Carnegie Mellon University. Each entry maps a word to its ARPABET phoneme sequence, where vowel phonemes are tagged with stress markers (digits 0, 1, 2). For example:\nPYTHON  P AY1 TH AH0 N\nThis word has two vowel phonemes (AY1, AH0), so it has 2 syllables. By counting the digits in an ARPABET string, we can count syllables reliably.\n\n\n9.3.2 Loading CMUdict into a Python Dictionary\nimport pandas as pd\nimport numpy as np\n\ncmu = pd.read_csv(\n    'cmudict-07b',\n    sep='  ',                  # two spaces\n    engine='python',\n    comment=';',               # ignore comment lines\n    names=['word', 'cmu_pronunciation'],\n    encoding='latin-1'\n)\n\n# Build dictionary\ncmudict = cmu.set_index('word')['cmu_pronunciation'].to_dict()\nKey points: - The CMUdict file uses two spaces as a delimiter between the word and its pronunciation — note sep='  '. - Lines beginning with ; are comments (metadata); comment=';' skips them automatically. - encoding='latin-1' is required because the file contains non-ASCII characters in some entries. - We convert the DataFrame into a plain Python dict (cmudict) for fast O(1) lookup during syllable counting.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#step-2-load-input-text-files",
+    "href": "08.Reading_Listening.html#step-2-load-input-text-files",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.4 Step 2 — Load Input Text Files",
+    "text": "9.4 Step 2 — Load Input Text Files\n\n9.4.1 Check Your Working Directory\nBefore reading files, confirm your current working directory so that relative paths resolve correctly:\nimport os\nprint(os.getcwd())\n\n\n9.4.2 Read All .txt Files from a Folder\nimport os\nimport pandas as pd\n\nfolder_path = './input_text'\n\nif not os.path.exists(folder_path):\n    raise FileNotFoundError(f\"Folder not found: {folder_path}\")\n\nfile_names = []\nfile_contents = []\n\nfor filename in sorted(os.listdir(folder_path)):\n    if filename.endswith('.txt'):\n        file_path = os.path.join(folder_path, filename)\n        \n        try:\n            with open(file_path, 'r', encoding='utf-8') as f:\n                content = f.read()\n        except UnicodeDecodeError:\n            with open(file_path, 'r', encoding='latin-1') as f:\n                content = f.read()\n        \n        file_names.append(filename)\n        file_contents.append(content)\n\ndf_input = pd.DataFrame({\n    'File_Name': file_names,\n    'Text': file_contents\n})\nKey points: - sorted(os.listdir(...)) ensures files are processed in alphabetical order, making results reproducible across runs. - A try/except block handles encoding issues: we attempt utf-8 first, then fall back to latin-1. This covers the vast majority of plain-text files. - The result is a DataFrame with two columns: File_Name and Text.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#step-3-data-cleaning",
+    "href": "08.Reading_Listening.html#step-3-data-cleaning",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.5 Step 3 — Data Cleaning",
+    "text": "9.5 Step 3 — Data Cleaning\nRaw text is messy. Before tokenizing, we standardize the text by removing punctuation, normalizing whitespace, and unifying apostrophe characters.\nimport re\n\ndf_input[\"Clean\"] = df_input[\"Text\"].apply(lambda x: x.upper())\ndf_input['Clean'] = df_input['Clean'].map(lambda x: re.sub('[,\\\\.!?()\\\"\"\"]', '', str(x))) \n\n# Replace curly/smart apostrophes with straight apostrophes\ndf_input['Clean'] = df_input['Clean'].map(lambda x: re.sub('[']', '\\'', str(x))) \n\ndf_input['Clean'] = df_input['Clean'].str.replace(r'\\s+', \" \", regex=True)\ndf_input[\"Clean\"] = df_input[\"Clean\"].str.strip()\ndf_input.to_csv(\"df_input.csv\")\ndf_input.head()\nWhat each step does:\n\n\n\n\n\n\n\n\nStep\nWhat It Does\nWhy\n\n\n\n\n.upper()\nConverts all text to uppercase\nCMUdict keys are uppercase (e.g., PYTHON, not python)\n\n\nre.sub('[,\\\\.!?()\"\"\"]', '', ...)\nRemoves common punctuation marks\nPunctuation would cause words to not match CMUdict\n\n\nre.sub('[']', \"'\", ...)\nReplaces curly/smart apostrophes with straight ones\nEnsures contractions like DON'T match CMUdict\n\n\nstr.replace(r'\\s+', \" \", ...)\nCollapses multiple spaces into one\nPrevents empty tokens after splitting\n\n\n.strip()\nRemoves leading/trailing whitespace\nClean boundaries for tokenization\n\n\n.to_csv(...)\nSaves the cleaned DataFrame to disk\nCheckpoint — useful for inspection and debugging",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#step-4-tokenization",
+    "href": "08.Reading_Listening.html#step-4-tokenization",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.6 Step 4 — Tokenization",
+    "text": "9.6 Step 4 — Tokenization\nSplit each cleaned text string into a list of individual word tokens:\ndf_input[\"Tokenized\"] = df_input[\"Clean\"].str.split(\" \")\ndf_input.head()\nAfter this step, each row in the Tokenized column contains a Python list of uppercase word strings, e.g., ['THE', 'QUICK', 'BROWN', 'FOX'].",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#step-5-convert-numbers-to-words",
+    "href": "08.Reading_Listening.html#step-5-convert-numbers-to-words",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.7 Step 5 — Convert Numbers to Words",
+    "text": "9.7 Step 5 — Convert Numbers to Words\nSAT passages sometimes contain numeric expressions like years (1865) or quantities (42). CMUdict has entries for word forms (EIGHTEEN, SIXTY-FIVE) but not for raw numerals. We use the num2words library to convert digits to their spoken equivalents before lookup.\n\n9.7.1 Install the Library\n!pip install num2words\n\n\n9.7.2 Define the Conversion Function\nimport num2words\n\ndef convert_num_to_words(utterance):\n    utterance = ' '.join([num2words.num2words(i).upper() if i.isdigit() else i for i in utterance])\n    return utterance\nHow it works: - Iterates over each token in the list. - If a token is a pure digit string (e.g., '42'), it calls num2words.num2words('42') → 'forty-two', then .upper() → 'FORTY-TWO'. - Non-digit tokens are passed through unchanged. - Finally, all tokens are joined back into a single space-separated string.\n\n\n9.7.3 Apply and Clean Hyphens\ndf_input[\"words\"] = df_input['Tokenized'].apply(convert_num_to_words)\ndf_input['words'] = df_input['words'].map(lambda x: re.sub('-', ' ', str(x)))  # numbers that have '-'\ndf_input\nnum2words produces hyphenated forms like FORTY-TWO. We replace hyphens with spaces so each part is treated as a separate token during lookup (FORTY and TWO are separate CMUdict entries).",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#step-6-syllable-counting",
+    "href": "08.Reading_Listening.html#step-6-syllable-counting",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.8 Step 6 — Syllable Counting",
+    "text": "9.8 Step 6 — Syllable Counting\nThis is the core of the pipeline. We combine two complementary methods:\n\n9.8.1 6.1 Prepare the Working DataFrame\ndf = df_input[['File_Name', 'Text', 'words']].copy()\ndf.head(2)\ndf['list'] = df['words'].str.split(\" \")\ndf['list'].fillna('empty', inplace=True)\n\ndf.head()\nWe split the cleaned words string back into a list, which we’ll iterate over for CMUdict lookups.\n\n\n\n9.8.2 6.2 Identify Out-of-Vocabulary (OOV) Words\nCMUdict is large (~130,000 entries) but not exhaustive. Proper nouns, technical terms, and very rare words may be missing. We separate these into a list for rule-based counting:\ndef extract_nocmu(data):\n    no_list = []\n    for word in data:\n        if word not in cmudict:\n            no_list.append(word)\n    return no_list\ndf[\"No_CMU_words\"] = df[\"list\"].apply(extract_nocmu)\ndf[\"No_CMU_words_cnt\"] = df[\"list\"].apply(extract_nocmu)\ndf.head()\n\nNo_CMU_words — stores the actual OOV word strings (for inspection).\nNo_CMU_words_cnt — a separate copy that will be overwritten with syllable counts in a later step.\n\n\n\n\n9.8.3 6.3 Replace In-Vocabulary Words with ARPABET Strings\nFor every word that is in CMUdict, replace the word with its ARPABET pronunciation string:\nfor sub in df['list']:\n    for i, word in enumerate(sub):\n        if word in cmudict:\n            sub[i] = cmudict[word]\ndf.head()\nAfter this step, each token in df['list'] is either: - An ARPABET string like 'P AY1 TH AH0 N' (for CMUdict words), or - The original word as-is (for OOV words that weren’t found).\n\n\n\n9.8.4 6.4 Rule-Based Syllable Counter for OOV Words\nFor words not in CMUdict, we use a regex-based heuristic. This approach counts vowel clusters and then applies correction rules for common English spelling patterns that are tricky (silent-e, adverb endings, etc.):\n# The following code is adapted from:\n# https://datascience.stackexchange.com/questions/23376/how-to-get-the-number-of-syllables-in-a-word\n\nimport re\n\nVOWEL_RUNS = re.compile(\"[aeiouy]+\", flags=re.I)  # re.IGNORECASE\nEXCEPTIONS = re.compile(\n    # fixes trailing e issues:\n    # smite, scared\n    \"[^aeiou]e[sd]?$|\"\n    # fixes adverbs:\n    # nicely\n    + \"[^e]ely$\",\n    flags=re.I\n)\n\nADDITIONAL = re.compile(\n    # fixes incorrect subtractions from exceptions:\n    # smile, scarred, raises, fated\n    \"[^aeioulr][lr]e[sd]?$|[csgz]es$|[td]ed$|\"\n    # fixes miscellaneous issues:\n    # flying, piano, video, prism, fire, evaluate\n    + \".y[aeiou]|ia(?!n$)|eo|ism$|[^aeiou]ire$|[^gq]ua\",\n    flags=re.I\n)\n\ndef count_syllables(word):\n    vowel_runs = len(VOWEL_RUNS.findall(word))\n    exceptions = len(EXCEPTIONS.findall(word))\n    additional = len(ADDITIONAL.findall(word))\n    return max(1, vowel_runs - exceptions + additional)\nHow the formula works:\nsyllables = max(1, vowel_runs − exceptions + additional)\n\n\n\n\n\n\n\n\nVariable\nWhat It Counts\nExample\n\n\n\n\nvowel_runs\nGroups of consecutive vowels (a, e, i, o, u, y)\n\"scared\" → ['a', 'e'] = 2\n\n\nexceptions\nPatterns that do not form a syllable (e.g., silent-e)\n\"scared\" → 'red$' matches → subtract 1\n\n\nadditional\nPatterns that form an extra syllable missed by vowel runs\n\"video\" → 'eo' matches → add 1\n\n\nmax(1, ...)\nEvery word has at least 1 syllable\nPrevents returning 0 for short words\n\n\n\nApply it to all OOV words:\nfor sub in df['No_CMU_words_cnt']:\n    for i, word in enumerate(sub):\n        sub[i] = count_syllables(word)\ndf.head()\nAfter this, No_CMU_words_cnt contains integer syllable counts for each OOV word.\n\n\n\n9.8.5 6.5 Count Syllables from ARPABET Strings (CMUdict Words)\nIn ARPABET notation, each vowel phoneme is followed by a stress digit (0, 1, or 2). Therefore, the number of digits in an ARPABET string equals the number of syllables:\nP AY1 TH AH0 N  →  digits: 1, 0  →  2 syllables\ndf['ARPAsent'] = df['list'].astype(str).str.replace('\\[|\\]|\\'', '')\ndf.head()\ndef count_digits(string):\n    return sum(item.isdigit() for item in string)\ndf['ARPAcnt'] = df['ARPAsent'].apply(count_digits)\ndf.head()\n\nARPAsent — the list column converted to a flat string (list brackets and quotes removed).\ncount_digits — iterates character by character; item.isdigit() returns True for '0', '1', '2' (ARPABET stress markers).\nARPAcnt — the total syllable count contributed by CMUdict-matched words.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#step-7-final-aggregation-and-export",
+    "href": "08.Reading_Listening.html#step-7-final-aggregation-and-export",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.9 Step 7 — Final Aggregation and Export",
+    "text": "9.9 Step 7 — Final Aggregation and Export\nCombine syllable counts from both sources and save:\ndf['NUMsum'] = df['No_CMU_words_cnt'].apply(sum)\ndf['CMU_based_Syllables'] = df['ARPAcnt'] + df['NUMsum']\ndf.to_excel('CMU_Syllable_Count.xlsx')\ndf.head()\n\n\n\n\n\n\n\nColumn\nMeaning\n\n\n\n\nNUMsum\nTotal syllables from OOV words (rule-based counting)\n\n\nARPAcnt\nTotal syllables from CMUdict words (ARPABET digit counting)\n\n\nCMU_based_Syllables\nGrand total syllables for the passage = ARPAcnt + NUMsum\n\n\n\nThe final output is written to CMU_Syllable_Count.xlsx, with one row per input .txt file.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#pipeline-summary",
+    "href": "08.Reading_Listening.html#pipeline-summary",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.10 Pipeline Summary",
+    "text": "9.10 Pipeline Summary\nRaw .txt Files\n     │\n     ▼\nLoad & Read (UTF-8 / latin-1 fallback)\n     │\n     ▼\nClean Text (uppercase, remove punctuation, normalize whitespace)\n     │\n     ▼\nTokenize (split on spaces)\n     │\n     ▼\nConvert Numbers → Words (num2words)\n     │\n     ▼\nSplit into In-Vocabulary vs OOV\n     ├─── In-Vocabulary → CMUdict lookup → ARPABET string → count digits\n     └─── OOV           → Rule-based regex counter\n     │\n     ▼\nSum both syllable counts per passage\n     │\n     ▼\nExport to CMU_Syllable_Count.xlsx",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#tips-common-issues",
+    "href": "08.Reading_Listening.html#tips-common-issues",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.11 Tips & Common Issues",
+    "text": "9.11 Tips & Common Issues\nQ: Some words are counted wrong — what can I do?\nA: The rule-based counter works well for common English words but may miscount proper nouns or foreign loanwords. You can manually add entries to cmudict to override:\ncmudict['YOURWORD'] = 'Y AO1 R W ER1 D'\nQ: My text has em-dashes (—) or ellipses (…) — will these cause problems?\nA: Yes. Add them to the cleaning regex:\ndf_input['Clean'] = df_input['Clean'].map(lambda x: re.sub('[,\\\\.!?()\"\"\"—…]', '', str(x)))\nQ: How do I use the syllable count for readability scoring?\nA: The Flesch-Kincaid Grade Level formula is:\nFK Grade = 0.39 × (words / sentences) + 11.8 × (syllables / words) − 15.59\nYou can compute words with len(token_list) and add sentence counting with nltk.sent_tokenize().",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
+  },
+  {
+    "objectID": "08.Reading_Listening.html#full-code-reference",
+    "href": "08.Reading_Listening.html#full-code-reference",
+    "title": "8  Reading and Listening Materials Development",
+    "section": "9.12 Full Code Reference",
+    "text": "9.12 Full Code Reference\nBelow is the complete pipeline in order, ready to copy into a single notebook or .py file:\n# === Step 1: Load CMUdict ===\nimport pandas as pd\nimport numpy as np\n\ncmu = pd.read_csv(\n    'cmudict-07b',\n    sep='  ',\n    engine='python',\n    comment=';',\n    names=['word', 'cmu_pronunciation'],\n    encoding='latin-1'\n)\ncmudict = cmu.set_index('word')['cmu_pronunciation'].to_dict()\n\n# === Step 2: Load input texts ===\nimport os\n\nfolder_path = './input_text'\nif not os.path.exists(folder_path):\n    raise FileNotFoundError(f\"Folder not found: {folder_path}\")\n\nfile_names, file_contents = [], []\nfor filename in sorted(os.listdir(folder_path)):\n    if filename.endswith('.txt'):\n        file_path = os.path.join(folder_path, filename)\n        try:\n            with open(file_path, 'r', encoding='utf-8') as f:\n                content = f.read()\n        except UnicodeDecodeError:\n            with open(file_path, 'r', encoding='latin-1') as f:\n                content = f.read()\n        file_names.append(filename)\n        file_contents.append(content)\n\ndf_input = pd.DataFrame({'File_Name': file_names, 'Text': file_contents})\n\n# === Step 3: Clean text ===\nimport re\n\ndf_input[\"Clean\"] = df_input[\"Text\"].apply(lambda x: x.upper())\ndf_input['Clean'] = df_input['Clean'].map(lambda x: re.sub('[,\\\\.!?()\\\"\"\"]', '', str(x)))\ndf_input['Clean'] = df_input['Clean'].map(lambda x: re.sub('[']', '\\'', str(x)))\ndf_input['Clean'] = df_input['Clean'].str.replace(r'\\s+', \" \", regex=True)\ndf_input[\"Clean\"] = df_input[\"Clean\"].str.strip()\ndf_input.to_csv(\"df_input.csv\")\n\n# === Step 4: Tokenize ===\ndf_input[\"Tokenized\"] = df_input[\"Clean\"].str.split(\" \")\n\n# === Step 5: Convert numbers to words ===\nimport num2words\n\ndef convert_num_to_words(utterance):\n    utterance = ' '.join([num2words.num2words(i).upper() if i.isdigit() else i for i in utterance])\n    return utterance\n\ndf_input[\"words\"] = df_input['Tokenized'].apply(convert_num_to_words)\ndf_input['words'] = df_input['words'].map(lambda x: re.sub('-', ' ', str(x)))\n\n# === Step 6: Count syllables ===\ndf = df_input[['File_Name', 'Text', 'words']].copy()\ndf['list'] = df['words'].str.split(\" \")\ndf['list'].fillna('empty', inplace=True)\n\ndef extract_nocmu(data):\n    return [word for word in data if word not in cmudict]\n\ndf[\"No_CMU_words\"] = df[\"list\"].apply(extract_nocmu)\ndf[\"No_CMU_words_cnt\"] = df[\"list\"].apply(extract_nocmu)\n\nfor sub in df['list']:\n    for i, word in enumerate(sub):\n        if word in cmudict:\n            sub[i] = cmudict[word]\n\nVOWEL_RUNS = re.compile(\"[aeiouy]+\", flags=re.I)\nEXCEPTIONS = re.compile(\"[^aeiou]e[sd]?$|[^e]ely$\", flags=re.I)\nADDITIONAL = re.compile(\n    \"[^aeioulr][lr]e[sd]?$|[csgz]es$|[td]ed$|.y[aeiou]|ia(?!n$)|eo|ism$|[^aeiou]ire$|[^gq]ua\",\n    flags=re.I\n)\n\ndef count_syllables(word):\n    vowel_runs = len(VOWEL_RUNS.findall(word))\n    exceptions = len(EXCEPTIONS.findall(word))\n    additional = len(ADDITIONAL.findall(word))\n    return max(1, vowel_runs - exceptions + additional)\n\nfor sub in df['No_CMU_words_cnt']:\n    for i, word in enumerate(sub):\n        sub[i] = count_syllables(word)\n\ndf['ARPAsent'] = df['list'].astype(str).str.replace('\\[|\\]|\\'', '')\n\ndef count_digits(string):\n    return sum(item.isdigit() for item in string)\n\ndf['ARPAcnt'] = df['ARPAsent'].apply(count_digits)\n\n# === Step 7: Aggregate and export ===\ndf['NUMsum'] = df['No_CMU_words_cnt'].apply(sum)\ndf['CMU_based_Syllables'] = df['ARPAcnt'] + df['NUMsum']\ndf.to_excel('CMU_Syllable_Count.xlsx')\nprint(df[['File_Name', 'CMU_based_Syllables']])",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Reading and Listening Materials Development</span>"
+    ]
   }
 ]
