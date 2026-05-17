@@ -223,6 +223,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reading and Listening Materials Development</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09.Speech_language_processing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Automatic Speech Recognition with Whisper and HuggingFace Transformers</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -559,9 +565,7 @@ window.Quarto = {
 <section id="inverse-document-frequency-idf" class="level3" data-number="5.3.3">
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="inverse-document-frequency-idf"><span class="header-section-number">5.3.3</span> <strong>Inverse Document Frequency (IDF)</strong></h3>
 <p>The <strong>IDF</strong> of a term measures how important a term is in the whole corpus. Words that are common across many documents (e.g., “the”, “is”, etc.) receive a low score. The formula is:</p>
-<p><span class="math display">\[
-IDF(t) = \log\left(\frac{N}{1 + \text{Number of documents containing term } t}\right)
-\]</span> Where:</p>
+<p><span class="math display">\[IDF(t) = \log\left(\frac{N}{1 + \text{Number of documents containing term } t}\right)\]</span> Where:</p>
 <ul>
 <li><p><em>N</em> is the total number of documents.</p></li>
 <li><p>The “+1” in the denominator is added to prevent division by zero.</p></li>
